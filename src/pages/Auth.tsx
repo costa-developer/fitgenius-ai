@@ -23,10 +23,13 @@ const Auth = () => {
 
     try {
       if (isLogin) {
-        const { error } = await supabase.auth.signInWithPassword({
+        console.log("Attempting login with email:", email);
+        const { data, error } = await supabase.auth.signInWithPassword({
           email,
           password,
         });
+
+        console.log("Login response:", { data, error });
 
         if (error) throw error;
 
@@ -36,7 +39,8 @@ const Auth = () => {
         });
         navigate("/dashboard");
       } else {
-        const { error } = await supabase.auth.signUp({
+        console.log("Attempting signup with:", { email, fullName });
+        const { data, error } = await supabase.auth.signUp({
           email,
           password,
           options: {
@@ -47,18 +51,28 @@ const Auth = () => {
           },
         });
 
+        console.log("Signup response:", { data, error });
+
         if (error) throw error;
 
-        toast({
-          title: "Account created!",
-          description: "Please complete your profile setup.",
-        });
-        navigate("/onboarding");
+        if (data.user) {
+          toast({
+            title: "Account created!",
+            description: "Please complete your profile setup.",
+          });
+          navigate("/onboarding");
+        } else {
+          toast({
+            title: "Check your email",
+            description: "Please verify your email address to continue.",
+          });
+        }
       }
     } catch (error: any) {
+      console.error("Auth error:", error);
       toast({
         title: "Error",
-        description: error.message,
+        description: error.message || "An error occurred during authentication",
         variant: "destructive",
       });
     } finally {
