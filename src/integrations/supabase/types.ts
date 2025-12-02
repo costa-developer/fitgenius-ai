@@ -167,40 +167,40 @@ export type Database = {
       }
       profiles: {
         Row: {
-          age: number
+          age: number | null
           created_at: string | null
           diet_preference: Database["public"]["Enums"]["diet_type"] | null
           full_name: string | null
-          gender: Database["public"]["Enums"]["gender_type"]
-          goal: Database["public"]["Enums"]["goal_type"]
-          height: number
+          gender: Database["public"]["Enums"]["gender_type"] | null
+          goal: Database["public"]["Enums"]["goal_type"] | null
+          height: number | null
           id: string
           updated_at: string | null
-          weight: number
+          weight: number | null
         }
         Insert: {
-          age: number
+          age?: number | null
           created_at?: string | null
           diet_preference?: Database["public"]["Enums"]["diet_type"] | null
           full_name?: string | null
-          gender: Database["public"]["Enums"]["gender_type"]
-          goal: Database["public"]["Enums"]["goal_type"]
-          height: number
+          gender?: Database["public"]["Enums"]["gender_type"] | null
+          goal?: Database["public"]["Enums"]["goal_type"] | null
+          height?: number | null
           id: string
           updated_at?: string | null
-          weight: number
+          weight?: number | null
         }
         Update: {
-          age?: number
+          age?: number | null
           created_at?: string | null
           diet_preference?: Database["public"]["Enums"]["diet_type"] | null
           full_name?: string | null
-          gender?: Database["public"]["Enums"]["gender_type"]
-          goal?: Database["public"]["Enums"]["goal_type"]
-          height?: number
+          gender?: Database["public"]["Enums"]["gender_type"] | null
+          goal?: Database["public"]["Enums"]["goal_type"] | null
+          height?: number | null
           id?: string
           updated_at?: string | null
-          weight?: number
+          weight?: number | null
         }
         Relationships: []
       }
