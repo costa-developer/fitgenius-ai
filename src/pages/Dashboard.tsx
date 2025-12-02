@@ -17,6 +17,7 @@ import {
 import WorkoutGenerator from "@/components/WorkoutGenerator";
 import MealPlanner from "@/components/MealPlanner";
 import HabitTracker from "@/components/HabitTracker";
+import WeightTracker from "@/components/WeightTracker";
 
 const Dashboard = () => {
   const [user, setUser] = useState<any>(null);
@@ -158,6 +159,9 @@ const Dashboard = () => {
           <WorkoutGenerator profile={profile} />
           <MealPlanner profile={profile} />
         </div>
+
+        {/* Weight Tracking */}
+        <WeightTracker userId={user?.id} currentWeight={profile?.weight} />
 
         {/* Habit Tracking */}
         <HabitTracker userId={user?.id} />
