@@ -56,6 +56,18 @@ const Auth = () => {
         if (error) throw error;
 
         if (data.user) {
+          // Create initial profile record
+          const { error: profileError } = await supabase
+            .from('profiles')
+            .insert({
+              id: data.user.id,
+              full_name: fullName,
+            });
+
+          if (profileError) {
+            console.error("Profile creation error:", profileError);
+          }
+
           toast({
             title: "Account created!",
             description: "Please complete your profile setup.",
