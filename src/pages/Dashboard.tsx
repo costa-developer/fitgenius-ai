@@ -156,8 +156,8 @@ const Dashboard = () => {
 
         {/* AI Features */}
         <div className="grid lg:grid-cols-2 gap-6">
-          <WorkoutGenerator profile={profile} />
-          <MealPlanner profile={profile} />
+          <WorkoutGenerator profile={profile} userId={user?.id} />
+          <MealPlanner profile={profile} userId={user?.id} />
         </div>
 
         {/* Weight Tracking */}
