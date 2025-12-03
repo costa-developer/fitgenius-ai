@@ -1,73 +1,83 @@
-# Welcome to your Lovable project
+# FitTrack AI 💪
 
-## Project info
+An AI-powered fitness and nutrition web app that provides personalized workouts, meal plans, and habit tracking.
 
-**URL**: https://lovable.dev/projects/d4db88df-5f8d-47ba-baba-0beb5517b2e0
+## Features
 
-## How can I edit this code?
+- **🏋️ AI Workout Generator** - Get personalized workout routines based on your fitness goals, age, weight, and gender
+- **🍎 AI Meal Planner** - Generate customized meal plans with macronutrient breakdowns tailored to your dietary preferences
+- **📊 Weight Tracking** - Log daily weight and visualize progress with interactive charts
+- **✅ Habit Tracker** - Track daily habits like water intake, sleep, steps, and more
+- **👤 User Profiles** - Onboarding flow to capture fitness goals and preferences
+- **🔐 Authentication** - Secure login and signup with email/password
 
-There are several ways of editing your application.
+## Tech Stack
 
-**Use Lovable**
+- **Frontend**: React, TypeScript, Vite, Tailwind CSS
+- **UI Components**: shadcn/ui, Lucide Icons, Recharts
+- **Backend**: Lovable Cloud (Supabase)
+- **AI**: Lovable AI Gateway (Google Gemini)
+- **Database**: PostgreSQL with Row Level Security
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/d4db88df-5f8d-47ba-baba-0beb5517b2e0) and start prompting.
+## Getting Started
 
-Changes made via Lovable will be committed automatically to this repo.
+### Using Lovable
 
-**Use your preferred IDE**
+Visit the [Lovable Project](https://lovable.dev/projects/d4db88df-5f8d-47ba-baba-0beb5517b2e0) and start prompting.
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+### Local Development
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
+# Clone the repository
 git clone <YOUR_GIT_URL>
 
-# Step 2: Navigate to the project directory.
+# Navigate to the project directory
 cd <YOUR_PROJECT_NAME>
 
-# Step 3: Install the necessary dependencies.
-npm i
+# Install dependencies
+npm install
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start the development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+## Project Structure
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```
+src/
+├── components/
+│   ├── ui/              # shadcn/ui components
+│   ├── WorkoutGenerator.tsx
+│   ├── MealPlanner.tsx
+│   ├── WeightTracker.tsx
+│   └── HabitTracker.tsx
+├── pages/
+│   ├── Index.tsx        # Landing page
+│   ├── Auth.tsx         # Login/Signup
+│   ├── Onboarding.tsx   # User profile setup
+│   └── Dashboard.tsx    # Main app dashboard
+├── hooks/               # Custom React hooks
+├── integrations/        # Supabase client & types
+└── lib/                 # Utility functions
+```
 
-**Use GitHub Codespaces**
+## Database Schema
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+- **profiles** - User profile data (age, weight, height, goals, diet)
+- **workouts** - Saved AI-generated workouts
+- **meals** - Saved AI-generated meal plans
+- **habits** - User habit definitions
+- **habit_logs** - Daily habit tracking entries
+- **weight_logs** - Weight tracking history
 
-## What technologies are used for this project?
+## Deployment
 
-This project is built with:
+Click **Share → Publish** in Lovable to deploy your app.
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## Custom Domain
 
-## How can I deploy this project?
+Navigate to **Project → Settings → Domains** to connect a custom domain.
 
-Simply open [Lovable](https://lovable.dev/projects/d4db88df-5f8d-47ba-baba-0beb5517b2e0) and click on Share -> Publish.
+## License
 
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+MIT
