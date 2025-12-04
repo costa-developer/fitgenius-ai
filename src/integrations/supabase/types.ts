@@ -14,6 +14,44 @@ export type Database = {
   }
   public: {
     Tables: {
+      badges: {
+        Row: {
+          badge_name: string
+          badge_type: string
+          description: string | null
+          earned_at: string
+          habit_id: string | null
+          id: string
+          user_id: string
+        }
+        Insert: {
+          badge_name: string
+          badge_type: string
+          description?: string | null
+          earned_at?: string
+          habit_id?: string | null
+          id?: string
+          user_id: string
+        }
+        Update: {
+          badge_name?: string
+          badge_type?: string
+          description?: string | null
+          earned_at?: string
+          habit_id?: string | null
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "badges_habit_id_fkey"
+            columns: ["habit_id"]
+            isOneToOne: false
+            referencedRelation: "habits"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       habit_logs: {
         Row: {
           created_at: string | null
@@ -51,24 +89,33 @@ export type Database = {
       }
       habits: {
         Row: {
+          best_streak: number | null
           created_at: string | null
+          current_streak: number | null
           id: string
+          last_logged_date: string | null
           target_value: number
           type: Database["public"]["Enums"]["habit_type"]
           unit: string
           user_id: string
         }
         Insert: {
+          best_streak?: number | null
           created_at?: string | null
+          current_streak?: number | null
           id?: string
+          last_logged_date?: string | null
           target_value: number
           type: Database["public"]["Enums"]["habit_type"]
           unit: string
           user_id: string
         }
         Update: {
+          best_streak?: number | null
           created_at?: string | null
+          current_streak?: number | null
           id?: string
+          last_logged_date?: string | null
           target_value?: number
           type?: Database["public"]["Enums"]["habit_type"]
           unit?: string
