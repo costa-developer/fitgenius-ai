@@ -18,6 +18,7 @@ import WorkoutGenerator from "@/components/WorkoutGenerator";
 import MealPlanner from "@/components/MealPlanner";
 import HabitTracker from "@/components/HabitTracker";
 import WeightTracker from "@/components/WeightTracker";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const Dashboard = () => {
   const [user, setUser] = useState<any>(null);
@@ -114,10 +115,13 @@ const Dashboard = () => {
               </p>
             </div>
           </div>
-          <Button variant="outline" size="sm" onClick={handleLogout} className="gap-2">
-            <LogOut className="h-4 w-4" />
-            <span className="hidden sm:inline">Logout</span>
-          </Button>
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <Button variant="outline" size="sm" onClick={handleLogout} className="gap-2">
+              <LogOut className="h-4 w-4" />
+              <span className="hidden sm:inline">Logout</span>
+            </Button>
+          </div>
         </div>
       </header>
 
