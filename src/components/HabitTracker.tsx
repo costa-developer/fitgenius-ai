@@ -6,6 +6,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Droplets, Moon, TrendingDown, Plus } from "lucide-react";
 import StreakBadge from "./StreakBadge";
 import BadgesDisplay from "./BadgesDisplay";
+import HabitAnalytics from "./HabitAnalytics";
 
 interface HabitTrackerProps {
   userId: string;
@@ -253,6 +254,7 @@ const HabitTracker = ({ userId }: HabitTrackerProps) => {
         </div>
       </Card>
 
+      <HabitAnalytics userId={userId} />
       <BadgesDisplay userId={userId} />
     </div>
   );
