@@ -5,12 +5,14 @@ import { Button } from "@/components/ui/button";
 import { 
   Dumbbell, 
   ArrowRight,
-  Play,
   Sparkles,
-  TrendingUp,
   Apple,
   Activity,
-  BarChart3
+  BarChart3,
+  Check,
+  Zap,
+  Shield,
+  Users
 } from "lucide-react";
 
 const Index = () => {
@@ -99,35 +101,81 @@ const Index = () => {
             <Button 
               variant="outline"
               className="h-12 px-8 text-base rounded-full font-medium border-border hover:bg-card"
+              onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
             >
-              <Play className="mr-2 w-4 h-4" />
-              Watch demo
+              Learn more
             </Button>
           </div>
         </div>
       </section>
 
-      {/* Video/Demo Section */}
+      {/* Dashboard Preview Section */}
       <section className="px-6 pb-32">
         <div className="max-w-5xl mx-auto">
-          <div className="relative rounded-2xl border border-border bg-card overflow-hidden aspect-video animate-fade-in" style={{ animationDelay: "400ms" }}>
-            {/* Placeholder for demo/video */}
-            <div className="absolute inset-0 bg-gradient-to-br from-card via-card to-muted/20">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-center space-y-6">
-                  <div className="w-20 h-20 rounded-full bg-foreground/10 border border-border flex items-center justify-center mx-auto backdrop-blur-sm">
-                    <Play className="w-8 h-8 text-foreground ml-1" />
+          <div className="relative rounded-2xl border border-border bg-card overflow-hidden animate-fade-in" style={{ animationDelay: "400ms" }}>
+            {/* Mock Dashboard UI */}
+            <div className="p-4 md:p-6 bg-gradient-to-br from-card via-card to-muted/10">
+              {/* Mock Header */}
+              <div className="flex items-center justify-between mb-6 pb-4 border-b border-border/50">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-foreground flex items-center justify-center">
+                    <Dumbbell className="w-4 h-4 text-background" />
                   </div>
-                  <p className="text-muted-foreground text-sm">See FitTrack in action</p>
+                  <span className="font-medium">Dashboard</span>
+                </div>
+                <div className="flex gap-2">
+                  <div className="w-8 h-8 rounded-full bg-muted" />
                 </div>
               </div>
-              {/* Subtle grid pattern */}
-              <div className="absolute inset-0 opacity-[0.03]" style={{
-                backgroundImage: `linear-gradient(to right, hsl(var(--foreground)) 1px, transparent 1px),
-                                  linear-gradient(to bottom, hsl(var(--foreground)) 1px, transparent 1px)`,
-                backgroundSize: '40px 40px'
-              }} />
+              
+              {/* Mock Stats Grid */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+                {[
+                  { label: "Weight", value: "72.5 kg", color: "from-primary/20 to-primary/5" },
+                  { label: "BMI", value: "23.4", color: "from-emerald-500/20 to-emerald-500/5" },
+                  { label: "Goal", value: "Muscle Gain", color: "from-amber-500/20 to-amber-500/5" },
+                  { label: "Streak", value: "7 days 🔥", color: "from-rose-500/20 to-rose-500/5" }
+                ].map((stat, i) => (
+                  <div key={i} className={`p-4 rounded-xl bg-gradient-to-br ${stat.color} border border-border/50`}>
+                    <p className="text-xs text-muted-foreground mb-1">{stat.label}</p>
+                    <p className="font-semibold">{stat.value}</p>
+                  </div>
+                ))}
+              </div>
+
+              {/* Mock Content Cards */}
+              <div className="grid md:grid-cols-2 gap-4">
+                <div className="p-4 rounded-xl border border-border bg-card/50">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Dumbbell className="w-4 h-4 text-primary" />
+                    <span className="text-sm font-medium">Today's Workout</span>
+                  </div>
+                  <div className="space-y-2">
+                    {["Push-ups: 3×15", "Squats: 4×12", "Planks: 3×45s"].map((ex, i) => (
+                      <div key={i} className="text-xs text-muted-foreground py-1.5 px-2 bg-muted/50 rounded">
+                        {ex}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className="p-4 rounded-xl border border-border bg-card/50">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Apple className="w-4 h-4 text-emerald-500" />
+                    <span className="text-sm font-medium">Meal Plan</span>
+                  </div>
+                  <div className="space-y-2">
+                    {["Breakfast: 450 cal", "Lunch: 620 cal", "Dinner: 580 cal"].map((meal, i) => (
+                      <div key={i} className="text-xs text-muted-foreground py-1.5 px-2 bg-muted/50 rounded">
+                        {meal}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
+            
+            {/* Gradient overlay at bottom */}
+            <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent pointer-events-none" />
           </div>
         </div>
       </section>
@@ -230,20 +278,132 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Stats Section */}
+      {/* Why FitTrack Section */}
       <section className="px-6 py-24 border-t border-border">
         <div className="max-w-4xl mx-auto">
-          <div className="grid grid-cols-3 gap-8 text-center">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-4">
+              Why choose FitTrack?
+            </h2>
+            <p className="text-muted-foreground text-lg">
+              Built for people who want results, not complexity.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6">
             {[
-              { value: "AI", label: "Powered" },
-              { value: "24/7", label: "Adaptive" },
-              { value: "100%", label: "Personalized" }
-            ].map((stat, i) => (
-              <div key={i}>
-                <div className="text-4xl md:text-5xl font-semibold mb-2">{stat.value}</div>
-                <div className="text-sm text-muted-foreground">{stat.label}</div>
+              {
+                icon: Zap,
+                title: "Instant AI Plans",
+                description: "Get personalized workout and meal plans in seconds, not hours."
+              },
+              {
+                icon: Shield,
+                title: "Private & Secure",
+                description: "Your data stays yours. No sharing, no ads, no compromises."
+              },
+              {
+                icon: Activity,
+                title: "Adaptive Progress",
+                description: "Plans evolve as you do. The AI learns from your results."
+              },
+              {
+                icon: Users,
+                title: "Built for Everyone",
+                description: "Beginner or advanced, any diet, any goal—we've got you."
+              }
+            ].map((item, i) => (
+              <div key={i} className="flex gap-4 p-5 rounded-xl border border-border bg-card/30 hover:bg-card/60 transition-colors">
+                <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center flex-shrink-0">
+                  <item.icon className="w-5 h-5 text-foreground" />
+                </div>
+                <div>
+                  <h3 className="font-medium mb-1">{item.title}</h3>
+                  <p className="text-sm text-muted-foreground">{item.description}</p>
+                </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing Section */}
+      <section id="pricing" className="px-6 py-24 border-t border-border">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-4">
+              Simple, honest pricing
+            </h2>
+            <p className="text-muted-foreground text-lg">
+              Start free. Upgrade when you're ready.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
+            {/* Free Plan */}
+            <div className="p-6 rounded-2xl border border-border bg-card/30">
+              <div className="mb-6">
+                <h3 className="text-lg font-medium mb-2">Free</h3>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-4xl font-semibold">$0</span>
+                  <span className="text-muted-foreground">/month</span>
+                </div>
+              </div>
+              <ul className="space-y-3 mb-6">
+                {[
+                  "AI workout generation",
+                  "Basic meal plans",
+                  "Habit tracking",
+                  "Weight logging"
+                ].map((feature, i) => (
+                  <li key={i} className="flex items-center gap-2 text-sm">
+                    <Check className="w-4 h-4 text-foreground" />
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+              <Button 
+                variant="outline" 
+                className="w-full rounded-full"
+                onClick={() => navigate("/auth")}
+              >
+                Get started
+              </Button>
+            </div>
+
+            {/* Pro Plan */}
+            <div className="p-6 rounded-2xl border-2 border-foreground bg-card relative">
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-foreground text-background text-xs font-medium rounded-full">
+                Popular
+              </div>
+              <div className="mb-6">
+                <h3 className="text-lg font-medium mb-2">Pro</h3>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-4xl font-semibold">$9</span>
+                  <span className="text-muted-foreground">/month</span>
+                </div>
+              </div>
+              <ul className="space-y-3 mb-6">
+                {[
+                  "Everything in Free",
+                  "Unlimited AI generations",
+                  "Advanced analytics",
+                  "Priority support",
+                  "Custom meal preferences"
+                ].map((feature, i) => (
+                  <li key={i} className="flex items-center gap-2 text-sm">
+                    <Check className="w-4 h-4 text-foreground" />
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+              <Button 
+                className="w-full rounded-full bg-foreground text-background hover:bg-foreground/90"
+                onClick={() => navigate("/auth")}
+              >
+                Start free trial
+              </Button>
+            </div>
           </div>
         </div>
       </section>
@@ -283,7 +443,7 @@ const Index = () => {
               <a href="#" className="hover:text-foreground transition-colors">Contact</a>
             </div>
             <p className="text-sm text-muted-foreground">
-              © 2024 FitTrack. All rights reserved.
+              © {new Date().getFullYear()} FitTrack. All rights reserved.
             </p>
           </div>
         </div>
