@@ -77,14 +77,30 @@ const Onboarding = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/10 via-background to-secondary/10 p-4">
-      <Card className="w-full max-w-2xl p-8 space-y-6 shadow-lg">
-        <div className="space-y-2">
-          <h1 className="text-3xl font-bold">Complete Your Profile</h1>
-          <p className="text-muted-foreground">
-            Help us personalize your fitness journey
-          </p>
+    <div className="min-h-screen bg-background text-foreground flex flex-col">
+      {/* Subtle gradient */}
+      <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-gradient-to-b from-accent/5 via-accent/[0.02] to-transparent rounded-full blur-3xl pointer-events-none" />
+
+      {/* Header */}
+      <header className="relative z-10 border-b border-border/50 bg-background/80 backdrop-blur-xl">
+        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-lg bg-foreground flex items-center justify-center">
+              <ArrowRight className="w-4 h-4 text-background" />
+            </div>
+            <span className="text-lg font-semibold tracking-tight">Complete Your Profile</span>
+          </div>
         </div>
+      </header>
+
+      <main className="flex-1 flex items-center justify-center p-6 relative z-10">
+        <Card className="w-full max-w-2xl p-8 space-y-6 border-border bg-card/50 backdrop-blur-sm">
+          <div className="space-y-2">
+            <h1 className="text-2xl font-semibold tracking-tight">Tell us about yourself</h1>
+            <p className="text-muted-foreground">
+              Help us personalize your fitness journey
+            </p>
+          </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid md:grid-cols-2 gap-4">
@@ -199,14 +215,27 @@ const Onboarding = () => {
             </div>
           </div>
 
-          <Button type="submit" className="w-full" size="lg" disabled={loading}>
+          <Button 
+            type="submit" 
+            className="w-full bg-foreground text-background hover:bg-foreground/90 rounded-full h-11" 
+            size="lg" 
+            disabled={loading}
+          >
             {loading ? "Saving..." : "Complete Setup"}
             <ArrowRight className="ml-2 h-5 w-5" />
           </Button>
         </form>
       </Card>
-    </div>
-  );
+    </main>
+
+    {/* Footer */}
+    <footer className="relative z-10 border-t border-border/50 py-6">
+      <div className="max-w-7xl mx-auto px-6 text-center text-sm text-muted-foreground">
+        <p>© {new Date().getFullYear()} FitTrack. All rights reserved.</p>
+      </div>
+    </footer>
+  </div>
+);
 };
 
 export default Onboarding;
