@@ -6,10 +6,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { Dumbbell } from "lucide-react";
+import { Dumbbell, ArrowLeft, Loader2 } from "lucide-react";
 
 const Auth = () => {
-  const [isLogin, setIsLogin] = useState(true);
+  const [mode, setMode] = useState<"login" | "signup" | "forgot">("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
@@ -22,14 +22,23 @@ const Auth = () => {
     setLoading(true);
 
     try {
-      if (isLogin) {
-        console.log("Attempting login with email:", email);
+      if (mode === "forgot") {
+        const { error } = await supabase.auth.resetPasswordForEmail(email, {
+          redirectTo: `${window.location.origin}/auth`,
+        });
+
+        if (error) throw error;
+
+        toast({
+          title: "Check your email",
+          description: "We've sent you a password reset link.",
+        });
+        setMode("login");
+      } else if (mode === "login") {
         const { data, error } = await supabase.auth.signInWithPassword({
           email,
           password,
         });
-
-        console.log("Login response:", { data, error });
 
         if (error) throw error;
 
@@ -39,7 +48,6 @@ const Auth = () => {
         });
         navigate("/dashboard");
       } else {
-        console.log("Attempting signup with:", { email, fullName });
         const { data, error } = await supabase.auth.signUp({
           email,
           password,
@@ -51,12 +59,9 @@ const Auth = () => {
           },
         });
 
-        console.log("Signup response:", { data, error });
-
         if (error) throw error;
 
         if (data.user) {
-          // Create initial profile record
           const { error: profileError } = await supabase
             .from('profiles')
             .insert({
@@ -93,75 +98,145 @@ const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/10 via-background to-accent/10 p-4">
-      <Card className="w-full max-w-md p-8 space-y-6 shadow-lg">
-        <div className="flex flex-col items-center space-y-2">
-          <div className="h-16 w-16 rounded-full bg-primary flex items-center justify-center mb-2">
-            <Dumbbell className="h-8 w-8 text-primary-foreground" />
-          </div>
-          <h1 className="text-3xl font-bold text-center">FitTrack AI</h1>
-          <p className="text-muted-foreground text-center">
-            Your intelligent fitness companion
-          </p>
-        </div>
+    <div className="min-h-screen bg-background text-foreground flex flex-col">
+      {/* Subtle gradient */}
+      <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-gradient-to-b from-accent/5 via-accent/[0.02] to-transparent rounded-full blur-3xl pointer-events-none" />
 
-        <form onSubmit={handleAuth} className="space-y-4">
-          {!isLogin && (
+      {/* Header */}
+      <header className="relative z-10 border-b border-border/50 bg-background/80 backdrop-blur-xl">
+        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center">
+          <button 
+            onClick={() => navigate("/")}
+            className="flex items-center gap-2.5 hover:opacity-80 transition-opacity"
+          >
+            <div className="w-8 h-8 rounded-lg bg-foreground flex items-center justify-center">
+              <Dumbbell className="w-4 h-4 text-background" />
+            </div>
+            <span className="text-lg font-semibold tracking-tight">FitTrack</span>
+          </button>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <main className="flex-1 flex items-center justify-center p-6 relative z-10">
+        <Card className="w-full max-w-md p-8 space-y-6 border-border bg-card/50 backdrop-blur-sm">
+          <div className="space-y-2 text-center">
+            <h1 className="text-2xl font-semibold tracking-tight">
+              {mode === "login" && "Welcome back"}
+              {mode === "signup" && "Create your account"}
+              {mode === "forgot" && "Reset password"}
+            </h1>
+            <p className="text-sm text-muted-foreground">
+              {mode === "login" && "Enter your credentials to continue"}
+              {mode === "signup" && "Start your fitness journey today"}
+              {mode === "forgot" && "We'll send you a reset link"}
+            </p>
+          </div>
+
+          <form onSubmit={handleAuth} className="space-y-4">
+            {mode === "signup" && (
+              <div className="space-y-2">
+                <Label htmlFor="fullName" className="text-sm">Full Name</Label>
+                <Input
+                  id="fullName"
+                  type="text"
+                  placeholder="John Doe"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  required
+                  className="bg-background border-border"
+                />
+              </div>
+            )}
+
             <div className="space-y-2">
-              <Label htmlFor="fullName">Full Name</Label>
+              <Label htmlFor="email" className="text-sm">Email</Label>
               <Input
-                id="fullName"
-                type="text"
-                placeholder="John Doe"
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
-                required={!isLogin}
+                id="email"
+                type="email"
+                placeholder="you@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="bg-background border-border"
               />
             </div>
-          )}
 
-          <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
-            <Input
-              id="email"
-              type="email"
-              placeholder="you@example.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
+            {mode !== "forgot" && (
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="password" className="text-sm">Password</Label>
+                  {mode === "login" && (
+                    <button
+                      type="button"
+                      onClick={() => setMode("forgot")}
+                      className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                      Forgot password?
+                    </button>
+                  )}
+                </div>
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  minLength={6}
+                  className="bg-background border-border"
+                />
+              </div>
+            )}
+
+            <Button 
+              type="submit" 
+              className="w-full bg-foreground text-background hover:bg-foreground/90 rounded-full h-11" 
+              disabled={loading}
+            >
+              {loading ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <>
+                  {mode === "login" && "Sign in"}
+                  {mode === "signup" && "Create account"}
+                  {mode === "forgot" && "Send reset link"}
+                </>
+              )}
+            </Button>
+          </form>
+
+          <div className="text-center space-y-2">
+            {mode === "forgot" ? (
+              <Button
+                variant="ghost"
+                onClick={() => setMode("login")}
+                className="text-sm text-muted-foreground hover:text-foreground"
+              >
+                <ArrowLeft className="h-4 w-4 mr-2" />
+                Back to login
+              </Button>
+            ) : (
+              <Button
+                variant="ghost"
+                onClick={() => setMode(mode === "login" ? "signup" : "login")}
+                className="text-sm text-muted-foreground hover:text-foreground"
+              >
+                {mode === "login"
+                  ? "Don't have an account? Sign up"
+                  : "Already have an account? Sign in"}
+              </Button>
+            )}
           </div>
+        </Card>
+      </main>
 
-          <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
-            <Input
-              id="password"
-              type="password"
-              placeholder="••••••••"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              minLength={6}
-            />
-          </div>
-
-          <Button type="submit" className="w-full" disabled={loading}>
-            {loading ? "Loading..." : isLogin ? "Sign In" : "Sign Up"}
-          </Button>
-        </form>
-
-        <div className="text-center">
-          <Button
-            variant="link"
-            onClick={() => setIsLogin(!isLogin)}
-            className="text-sm"
-          >
-            {isLogin
-              ? "Don't have an account? Sign up"
-              : "Already have an account? Sign in"}
-          </Button>
+      {/* Footer */}
+      <footer className="relative z-10 border-t border-border/50 py-6">
+        <div className="max-w-7xl mx-auto px-6 text-center text-sm text-muted-foreground">
+          <p>© {new Date().getFullYear()} FitTrack. All rights reserved.</p>
         </div>
-      </Card>
+      </footer>
     </div>
   );
 };
